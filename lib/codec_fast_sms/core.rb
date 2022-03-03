@@ -15,7 +15,7 @@ module CodecFastSms
 
     # Call the api and process the response.
     def perform
-      resp = connection.get(request_uri) do |req|
+      resp = connection.post(request_uri) do |req|
         req.params = params
       end
       self.response = resp.body
