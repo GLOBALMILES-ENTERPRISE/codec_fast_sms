@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'uri'
+
 module CodecFastSms
   # Core
   class Core
@@ -16,8 +18,10 @@ module CodecFastSms
     # Call the api and process the response.
     def perform
       resp = connection.post(request_uri) do |req|
-        req.params = params
+        req.body = URI.encode_www_form(params)
+        req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
       end
+
       self.response = resp.body
       # If server returns 200, everything is OK.
       true
